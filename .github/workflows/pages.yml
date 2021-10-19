@@ -53,5 +53,6 @@ jobs:
           repo: Umajs/umajs.github.io
           target_branch: main
           build_dir: dist
+          keep_history: true
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
