@@ -18,7 +18,7 @@ console.log('Mode:', isProd ? 'Production' : 'development')
  */
 module.exports = defineUserConfig<DefaultThemeOptions, WebpackBundlerOptions>({
   base: '/v2/',
-  dest: path.resolve(__dirname, '../../dist'),
+  dest: path.resolve(__dirname, '../../dist/v2'),
   public: 'public',
   title: 'UMajs',
   description: 'Umajs，an easy-to-use NodeJS framework base on Typescript.',
