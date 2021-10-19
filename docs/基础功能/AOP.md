@@ -72,4 +72,4 @@ export async function method(proceedPoint: IProceedJoinPoint<any>) {
 
 ### middlewareToAround
 
-Uma 提供了将`Middleware(中间件)转Around(环绕)`的方法`middlewareToAround`，将中间件专为 Around 修饰器后，我们可以以 AOP 的装饰器形式使用中间件，具体参考 [Middleware 参考文档](./Middleware.md#aop-装饰器形式)
+Uma 提供了将`Middleware(中间件)转Around(环绕)`的方法`middlewareToAround`，将中间件转为 Around 修饰器后，我们可以以 AOP 的装饰器形式使用中间件，具体参考 [Middleware 参考文档](./Middleware.md#aop-装饰器形式)
