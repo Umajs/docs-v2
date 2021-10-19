@@ -6,35 +6,11 @@ AOP(Aspect Oriented Programming)面向切面编程是与 OOP(Object Oriented Pro
 
 ## 什么是切面(Aspect)
 
-AOP 名为面向切面编程，所以切面(Aspect)是 AOP 中一个很关键的点。
+AOP 称为`面向切面编程`，所以切面(Aspect)是 AOP 中一个很关键的点。
 
-比如假设我们有一个订单系统，有如下两条线的功能，提交订单和查询订单，每个事件流都需要执行“验证用户信息”的操作，将这个功能框起来后，你可以把它当块板子，这块板子插入了一些控制流程，这块板子就可以当成是 AOP 中的一个切面。
+假设我们有一个订单系统，有如下两条线的功能，提交订单和查询订单，每个事件流都需要执行“验证用户信息”的操作，将这个功能框起来后，你可以把它当块板子，这块板子插入了一些控制流程，这块板子就可以当成是 AOP 中的一个切面。
 
 ![AOP](../../public/images/AOP-aspect.png)
-
-## 如何创建 Aspect
-
-在 Uma 中定义一个 Aspect 需要遵循以下几点规范：
-
-1. 框架会扫描`${URSA_ROOT}/aspect`目录下的文件读取 Aspect，所以，所有的 Aspect 文件都必须放在`app/aspect`目录下，支持多级目录
-2. 所有 Aspect 文件的命名需要按照`名称.aspect.ts`的格式，以`.aspect.ts`为后缀名，使用时 Aspect 的名称会取.aspect 前的文件名
-3. Aspect 类需要实现`IAspect接口`
-
-例如，我们在`${URSA_ROOT}/aspect`目录下创建一个`test.aspect.ts`：
-
-```javascript
-// app/aspect/test.aspect.ts
-
-import { IAspect, IJoinPoint } from '@umajs/core'
-
-export default class Test implements IAspect {
-  before(point: IJoinPoint) {
-    console.log('index: this is before:', point.target)
-  }
-}
-```
-
-该方法实现了一个切面，切面定义了前置通知方法，我们会在下面介绍通知
 
 ## 通知
 
@@ -46,154 +22,54 @@ export default class Test implements IAspect {
 - 最终通知：当目标方法有返回值之后执行，在后置通知之后
 - 环绕通知：在最开始调用时执行，会将目标方法作为参数传入，对目标方法(proceed)及入参(args)、出参(result)进行拦截，此方法必须返回 Result
 
-在 Uma 中我们对这 5 个通知都做了实现，你需要先在 aspect 文件中定义这些通知，然后在 controller 中通过修饰器的方式使用它。
+> 在 Uma 的 V1 版本我们实现了5个通知，在 V2 版本我们对通知进行了简化，减少用户对 AOP 理解的成本，保留了使用最多最灵活的 环绕`around`通知
 
-### 切面实现
+## @Around 修饰器
 
-可以选择性的实现 `IAspect` 的方法（一个或者多个），调用的时候可以通过 `Aspect(aspect)` 调用全部实现方法，或者通过 `Aspect.around(aspect)` 、`Aspect.afterThrowing(aspect)` 等方法调用某一个具体方法。
+在 Uma 中，可以通过修饰器`@Around`的方式为方法添加环绕通知，Around修饰器接收一个参数，作为通知方法
 
-```javascript
-import { IAspect, IJoinPoint, IProceedJoinPoint } from '@umajs/core'
+**类型声明**
 
-export default class Method implements IAspect {
-  before(point: IJoinPoint) {
-    // 前置通知
-  }
-  after(point: IJoinPoint) {
-    // 后置通知
-  }
-  async around(proceedPoint: IProceedJoinPoint) {
-    const { proceed, args } = proceedPoint
-    // 环绕通知before
-    return await proceed(...args)
-    // 环绕通知after
-  }
-  afterThrowing(e: Error) {
-    // 异常通知
-  }
-  afterReturning(point: IJoinPoint, result: any) {
-    // 返回通知
-  }
-}
+```ts
+/**
+ * @param around 要执行的通知方法，方法需要return Uma 提供的 Result结果
+ */
+Around(around: (point: IProceedJoinPoint) => Promise<Result<any>>)
 ```
 
-其中`IJoinPoint`和`IProceedJoinPoint`类型声明为
+**示例**
 
 ```javascript
-export interface IJoinPoint {
-  target: Object; // controller 实例
-  args: Array<any>; // 方法参数
-}
-
-export interface IProceedJoinPoint extends IJoinPoint {
-  proceed: Function; // 方法，Around 专属
-}
-```
-
-一个目标上可以作用多个 Aspect，多个 Aspect 的执行顺序为包裹型，具体执行顺序见下图：
-
-![images](../../public/images/AOP-notice.png)
-
-## @Aspect 修饰器
-
-在 Uma 中，通过修饰器`@Aspect`的方式使用 Aspect
-
-### 1. 作用点
-
-`@Aspect`修饰器可以作用在某个 controller 的`class`上或者 controller 的`某个方法`上
-
-```javascript
-// 作用在class上
-@Aspect('test1')
-export default class Index extends BaseController {
-  // 作用在方法上
-  @Aspect('test2')
-  index() {
-    return this.send('这里是首页')
-  }
-}
-```
-
-作用在 Class 上的 Aspect 会被应用于 Class 的所有方法上
-
-### 2. 语法
-
-`@Aspect`修饰器有两种语法形式
-
-- 对目标使用 Aspect 中的所有通知：**@Aspect('xx')**
-- 对目标使用 Aspect 中指定通知：**@Aspect.before('xx')、@Aspect.after('xx')、@Aspect.afterThrowing('xx')、@Aspect.afterReturning('xx')、@Aspect.around('xx')**
-
-```javascript
-export default class Index extends BaseController {
-  // 所有通知
-  @Aspect('test1')
-  // 指定只生效前置
-  @Aspect.before('test2')
-  // 指定只生效环绕
-  @Aspect.around('test2')
-  index() {
-    return this.send('这里是首页')
-  }
-}
-```
-
-> 注意 1：around 方式可以修改被修饰方法的入参和出参，因此在部分场景返回值需要特别注意，例如在修饰 controller 方法时，未返回或者返回值类型不是 Result 时可能会提示出错。
->
-> 注意 2：afterThrowing 会捕获并拦截错误，如果不将错误抛出，上层将不会捕获错误。
-
-### 中间件转环绕使用
-
-[Middleware 参考文档](./Middleware.md#aop-装饰器形式)
-
-### 实例
-
-例如上面的`${URSA_ROOT}/aspect/test.aspect.ts`中我们定义了一个前置(before)通知，如果想再定义一个环绕(around)通知，可以这样修改：
-
-```javascript
-// ${URSA_ROOT}/aspect/test.aspect.ts
-
-import { IAspect, IJoinPoint, IProceedJoinPoint, Result } from '@umajs/core'
-
-export default class Test implements IAspect {
-  before(point: IJoinPoint) {
-    console.log('index: this is before:', point.target)
-  }
-  // ====> 创建环绕通知
-  async around(proceedPoint: IProceedJoinPoint) {
-    const { proceed, args } = proceedPoint
-    console.log('index: this is around before')
-
-    // 判断登录，还可以做其他判断逻辑等等
-    if (!isLogin) return Result.redirect('/login')
-
-    // args 为参数，可以对参数进行判断、修改等等操作
-    const result = await proceed(...args)
-    console.log('index: this is around after')
-    return result
-  }
-}
-```
-
-然后在`${URSA_ROOT}/controller/index.controller.ts`中使用它
-
-```javascript
-// ${URSA_ROOT}/controller/index.controller.ts
-
-import { BaseController, Path, Aspect } from '@umajs/core'
+import { BaseController, Result, Around } from '@umajs/core';
+import { method } from '../aspect/method.aspect';
 
 export default class Index extends BaseController {
-  // ===> 在这里使用
-  @Aspect.around('test')
-  index() {
-    return this.view('index.html', { name: 'Abc123' })
-  }
-
-  @Aspect('test')
-  @Path('/test')
-  test() {
-    return this.json({ test: 1 })
-  }
+    // 为index方法添加around修饰，method为对应要执行的around通知方法
+    @Around(method)
+    index() {
+      return Result.send('ok');
+    }
 }
 ```
 
-这样你在访问 Index/index 方法时，会先执行`${URSA_ROOT}/aspect/test.aspect.ts`中的 around 方法，index 方法被框架封装后作为参数传给 around 通知方法
+```javascript
+// /aspect/method.aspect.ts
+import { IProceedJoinPoint } from '@umajs/core';
+
+export async function method(proceedPoint: IProceedJoinPoint<any>) {
+    // 执行around before方法，即在被修饰方法执行前操作，当做一些前置校验的时候如果不满足可以直接return
+    console.log('this is around');
+
+    // 执行被修饰的方法
+    const result = await proceedPoint.proceed();
+    
+    // 执行around after方法，即在被修饰方法执行后操作
+    console.log('this is around after');
+
+    return result;
+}
+```
+
+### middlewareToAround
+
+Uma 提供了将`Middleware(中间件)转Around(环绕)`的方法`middlewareToAround`，将中间件专为 Around 修饰器后，我们可以以 AOP 的装饰器形式使用中间件，具体参考 [Middleware 参考文档](./Middleware.md#aop-装饰器形式)
