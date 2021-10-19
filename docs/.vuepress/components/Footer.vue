@@ -35,8 +35,14 @@
           ><a
             class="list-item"
             target="_blank"
-            href="https://github.com/Umajs/umajs-react-ssr"
-            >umajs-react-ssr</a
+            href="https://github.com/Umajs/plugin-react-ssr"
+            >plugin-react-ssr</a
+          >
+          <a
+            class="list-item"
+            target="_blank"
+            href="https://github.com/Umajs/plugin-vue-ssr"
+            >plugin-vue-ssr</a
           ><a
             class="list-item"
             target="_blank"
@@ -64,7 +70,7 @@
 <style lang="scss" scoped>
 .global-foot {
   padding: 3rem;
-  background-color: #06080a;
+  background-color: #083c63;
 }
 .global-foot-body {
   display: flex;

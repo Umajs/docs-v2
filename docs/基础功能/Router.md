@@ -17,25 +17,6 @@ const uma = Uma.instance({
 uma.start(8058)
 ```
 
-## 默认路由
-
-在`Uma`中默认所有 controller 的`所有方法`都可以被`任何请求方式`访问到，访问的地址为`/${controller名称}/${方法名称}`，我们对这种路由称之为`默认路由`。
-
-例如在`${URSA_ROOT}/controller`目录下创建一个`test.controller.ts`：
-
-```javascript
-// ${URSA_ROOT}/controller/test.controller.ts
-import { BaseController } from '@umajs/core'
-
-export default class Test extends BaseController {
-  index() {
-    return this.send('this is test/index router')
-  }
-}
-```
-
-在浏览器地址栏通过访问`127.0.0.1:端口号/test/index`就可以看到页面显示出`this is test/index router`。
-
 ## @Path 修饰器
 
 如果你不想通过默认路由的方式访问时，`Uma`提供了`@Path修饰器`来指定 controller 方法被访问的 URI 格式。
@@ -75,14 +56,17 @@ export default class Test extends BaseController {
   @Path() // 路由： /page
   @Path('/home') // 路由： /page/home
   index() {
+    return this.send('this is page/index router')
+  }
+  test() {
     return this.send('this is test/index router')
   }
 }
 ```
 
-在浏览器地址栏通过访问`127.0.0.1:端口号/page/home`就可以看到页面显示出`this is test/index router`。
+在浏览器地址栏通过访问`127.0.0.1:端口号/page/home` 或 `127.0.0.1:端口号/page/`就可以看到页面显示出`this is page/index router`。
 
-> 注意：作用在 class 上的@Path 不会影响默认路由，只会和方法上的 `@Path` 修饰器合并使用，即在浏览器地址栏通过访问`127.0.0.1:端口号/page/home`可以看到页面显示出`this is test/index router`，但输入`127.0.0.1:端口号/page/test`会返回 Not Found。
+> 注意：v2.0 版本之后，框架取消了文件默认路由，即我们不能通过`127.0.0.1:端口号/page/test`访问到目标函数，接口将会返回 Not Found。请确保所有路由都被`@Path`装饰。
 >
 > 同时，访问`127.0.0.1:端口号/page`也可以看到页面显示出`this is test/index router`
 
@@ -99,7 +83,7 @@ export default class Test extends BaseController {
 }
 ```
 
-在浏览器地址栏通过访问`127.0.0.1:端口号/home`就可以看到页面显示出`this is test/index router`，通过@Path 修饰器修饰过的方法访问时地址不加 Controller 名，即不是`/test/home`而是`/home`。
+在浏览器地址栏通过访问`127.0.0.1:端口号/home`就可以看到页面显示出`this is test/index router`。
 
 > 注意：此时，在浏览器地址栏访问`127.0.0.1:端口号/test/index`就不能访问到 index 方法了，因为在`Uma`中，被@Path 修饰器修饰过的方法，不能再通过默认路由的方式访问。
 
@@ -219,15 +203,17 @@ export default class Test extends BaseController {
 
 框架在 `@Path` 装饰器的基础上还提供了一些其它快捷的路由装饰器 [@umajs/path](../other/path.md)
 
-## @Param、@Query 修饰器
+## 路由参数处理
 
-在上面的正则路由中我们提到过@Param 修饰器，`Uma`中提供了两种修饰器@Param 和@Query 来方便的获取请求中的参数
+在上面的正则路由中我们提到过@Param 修饰器，`UMajs`中默认只提供了两种修饰器@Param 和@Query 来方便的获取请求中的参数。对于更丰富的参数处理场景，框架提供了一个专门处理参数的装饰器工具包，[@umajs/arg-decorator](../other/ArgDecorator.md);方便开发者对参数进行接收，校验判断和类型转换。
+
+### @Param，@Query 参数处理
 
 例如我们对上面创建的 test.controller.ts 文件做以下修改：
 
 ```javascript
 import { BaseController, Path } from '@umajs/core'
-
+import { Param, Query } from '@umajs/arg-decorator'
 @Path('/page')
 export default class Test extends BaseController {
   @Path('/:name')
@@ -260,6 +246,7 @@ title: uma
 
 ```javascript
 import { BaseController, Path } from '@umajs/core'
+import { Param, Query } from '@umajs/arg-decorator'
 
 @Path('/page')
 export default class Test extends BaseController {
@@ -273,30 +260,4 @@ export default class Test extends BaseController {
 }
 ```
 
-## @Private 修饰器
-
-`Uma`默认所有 controller 方法都可以被访问到，如果你不想某个方法被访问时，可以通过@Private 修饰器修饰方法。
-
-例如我们对上面创建的 test.controller.ts 文件做以下修改：
-
-```javascript
-import { BaseController, Path, RequestMethod } from '@umajs/core'
-
-@Path('/page')
-export default class Test extends BaseController {
-  @Path('/:name')
-  index(@Param('name') name: string, @Query('name') title: string) {
-    // ====> 从ctx中获取参数
-    console.log(this.ctx.param.name)
-    console.log(this.ctx.query.title)
-    return this.send('this is test/index router')
-  }
-
-  @Private
-  test() {
-    this.send('this is test/test router')
-  }
-}
-```
-
-此时，被@Private 修饰过的 test 方法，不能再通过`/test/test`的方式访问到。
+**对于POST类型路由请求，参数获取和处理请查看[@Body](../other/ArgDecorator.md#示例)**

@@ -42,7 +42,7 @@ export default {
 
 ## AOP 装饰器形式
 
-中间件和 Aspect.around 方式很相似，都是包裹异步方法。中间件是 next，around 是 proceed，但是他们有一些区别：
+中间件和 Around 方式很相似，都是包裹异步方法。中间件是 next，around 是 proceed，但是他们有一些区别：
 
 > 1、中间件不能处理参数，不能处理返回结果
 >
@@ -53,10 +53,11 @@ Uma 内置了将中间件转换为切面的方法 `middlewareToAround`，因此�
 ```javascript
 // app/src/controller/index.controller.ts AOP形式使用中间件
 import * as path from 'path';
-import { BaseController, Path, Aspect, Result } from '@umajs/core';
+import { BaseController, Path, Around, Result } from '@umajs/core';
+import { mv } from './../aspect/mw.aspect'
 
 export default class Index extends BaseController {
-    @Aspect.around('mw')
+    @Around(mw)
     @Path('/page')
     page() {
        console.log(this.userService.getDefaultUserAge());
@@ -65,7 +66,7 @@ export default class Index extends BaseController {
 }
 
 // app/src/aspect/mw.aspect.ts 定义AOP
-import { IAspect, middlewareToAround } from '@umajs/core';
+import { middlewareToAround } from '@umajs/core';
 
 const mwFn = function() { // 定义中间件
   return async (ctx, next) => {
@@ -76,15 +77,12 @@ const mwFn = function() { // 定义中间件
 }
 
 // 将中间件转换为切面方法
-export default class implements IAspect {
-    // 第一种方法
-    // async around({ target, proceed, args }) {
-    //     return await middlewareToAround(mwFn())({target, proceed, args});
-    // }
-
-    // 第二种方法
-    around = middlewareToAround(mwFn());
+export const mv = async ()=>{
+   return middlewareToAround(mwFn())
 }
 ```
 
 对于有局部加载需求的中间件，使用 AOP 形式代码结构更清晰，可读性更强，可以在`controller`中直观的看到当前中间件的使用。
+
+## Middleware装饰器
+> V2之后新增了Middleware，具体使用方法待补充。。。TODO

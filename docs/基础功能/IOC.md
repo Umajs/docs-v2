@@ -43,7 +43,7 @@ class Test {
 
 例如，我们在`${URSA_ROOT}/model`中创建一个`user.model.ts`，并使用@Resource 将该类实例化后加入到资源容器中.
 
-**注意**`inject`传入容器名称为被修饰`class的文件名`，而`非class类名`。比如`Resouce`修饰了`service.user.ts`,使用`@Inject('user')`注入。
+**注意**`inject`装饰器在V2版本之后只接受函数类型参数。
 
 ```javascript
 import { Resource } from '@umajs/core'
@@ -75,7 +75,7 @@ import UserModel from '../model/user.model'
 
 export default class Index extends BaseController {
   // ===> 获取实例，实例的名称为@Resource修饰的class所在的文件名
-  @Inject('user')
+  @Inject(UserModel)
   user: UserModel
 
   async testModel() {
@@ -123,46 +123,3 @@ export default class Demp extends BaseService {
 ### 非 Controller 中使用 @Service 时，必须传入 ctx 进行实例化才能使用或者 service 类不继承 BaseService,使用@Resource 容器修饰此 class。
 
 [Service 参考文档](./Service.md)
-
-**在`service`文件夹目录下使用`@Resource`需要启用非严格目录，初始化 Uma 实例时设置`strictDir:true`。**
-
-```ts
-const options: TUmaOption = {
-  Router,
-  bodyParser: { multipart: true },
-  strictDir: true, // 启用非严格模式
-  ROOT: __dirname,
-  env: process.argv.indexOf('production') > -1 ? 'production' : 'development',
-}
-const uma = Uma.instance(options)
-uma.start(8058)
-```
-
-```ts
-// service
-import { Inject, Resource } from '@umajs/core'
-import User from '../model/User'
-@Resource()
-export default class {
-  @Inject(User) // or @Inject('User')
-  user: User
-
-  getDefaultUserAge() {
-    return this.user.getAge()
-  }
-}
-```
-
-```ts
-// controller
-import { BaseController, Path, Result, Inject } from '@umajs/core'
-import UserService from '../service/user.service'
-
-export default class Index extends BaseController {
-  @Path('/user')
-  test() {
-    console.log(this.userService.getDefaultUserAge())
-    return Result.send('get defaultUserAge')
-  }
-}
-```

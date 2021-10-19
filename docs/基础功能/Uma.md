@@ -50,10 +50,9 @@ type TUmaOption = {
   ROOT: string
   // 运行环境
   env?: 'development' | 'production' | string
-  // 严格目录，非严格目录只有 'plugins' 是保留目录，严格目录还有 'controller'、'service'
-  strictDir?: boolean
   // 配置文件夹路径
   configPath?: string
+  // 需要拿到真实用户ip时设置为true
   proxy?: boolean
   subdomainOffset?: number
   jsonpBody?: TJsonpBody

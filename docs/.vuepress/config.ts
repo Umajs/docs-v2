@@ -17,12 +17,11 @@ console.log('Mode:', isProd ? 'Production' : 'development')
  * @see https://v2.vuepress.vuejs.org/reference/config.html
  */
 module.exports = defineUserConfig<DefaultThemeOptions, WebpackBundlerOptions>({
-  base: '/',
+  base: '/v2/',
   dest: path.resolve(__dirname, '../../dist'),
   public: 'public',
-
   title: 'UMajs',
-  description: 'UMajs 文档',
+  description: 'Umajs，an easy-to-use NodeJS framework base on Typescript.',
 
   bundler:
     process.env.BUNDLER ??
@@ -104,17 +103,16 @@ module.exports = defineUserConfig<DefaultThemeOptions, WebpackBundlerOptions>({
     '/en/': {
       lang: 'en-US',
       title: 'UMajs',
-      description: '一个简单易用、扩展灵活，基于TypeScript的Node.js Web框架',
+      description: 'A simple, flexible, typescript based node.js Web Framework',
     },
-
-    /**
-     * Japanese locale config
-     */
-    '/ja/': {
-      lang: 'ja-JP',
-      title: 'UMajs',
-      description: '一个简单易用、扩展灵活，基于TypeScript的Node.js Web框架',
-    },
+    // /**
+    //  * Japanese locale config
+    //  */
+    // '/ja/': {
+    //   lang: 'ja-JP',
+    //   title: 'UMajs',
+    //   description: '一个简单易用、扩展灵活，基于TypeScript的Node.js Web框架',
+    // },
   },
 
   /**
@@ -123,7 +121,7 @@ module.exports = defineUserConfig<DefaultThemeOptions, WebpackBundlerOptions>({
    */
   themeConfig: {
     repo: 'https://github.com/Umajs/Umajs',
-    logo: './img/UMajs.69973084.png',
+    logo: '/images/UMajsV2.png',
     repoLabel: 'Github',
     docsBranch: 'main',
     docsRepo: 'https://github.com/Umajs/docs',
@@ -264,8 +262,7 @@ module.exports = defineUserConfig<DefaultThemeOptions, WebpackBundlerOptions>({
     [
       'seo2',
       {
-        author: 'JiaZeng',
-        twitterID: 'UMajs',
+        author: 'wuba',
         restrictions: '3+',
         // seo: () => {
         //   return {

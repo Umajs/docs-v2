@@ -18,15 +18,7 @@
 
 [Router 参考文档](./Router.md#path修饰器)
 
-框架在 `@Path` 装饰器的基础上还提供了一些其它快捷的路由装饰器 [@umajs/path](../other/path.md)
-
-### @Private 修饰器
-
-[Router 参考文档](./Router.md##private修饰器)
-
-### @Param、@Query 修饰器
-
-[Router 参考文档](./Router.md##param、-query修饰器)
+#### 参数装饰器 [@Param , @Query, @Body](../other/ArgDecorator.md)
 
 ### 自定义参数装饰器 createArgDecorator
 
@@ -85,5 +77,3 @@ export const AgeCheck = createArgDecorator((ctx: IContext, ageKey: string) => {
   return age
 })
 ```
-
-#### 框架提供的参数装饰器 [参数装饰](../other/ArgDecorator.md)

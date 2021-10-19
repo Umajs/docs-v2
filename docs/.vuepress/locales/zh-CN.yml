@@ -41,6 +41,11 @@
         - text: 'Vue'
           link: '/服务端渲染/Vue-ssr.md'
 
+    - text: v2.x
+      children:
+        - text: 'v1.x'
+          link: 'https://umajs.gitee.io/'
+
   # sidebar
   sidebar:
     - text: 新手指南
@@ -119,26 +124,28 @@
 
     - text: 其它
       children:
-        - text: path
-          link: /other/path.md
-
         - text: 断点调试
           link: /other/断点调试.md
 
         - text: 错误处理
           link: /other/错误处理.md
 
+        - text: 日志
+          link: /插件/Logger.md
+
     - text: 服务端渲染
       children:
         - text: React
           link: /服务端渲染/React-ssr.md
 
-        - text: Vue
+        - text: Vue2.0
           link: /服务端渲染/Vue-ssr.md
 
-    - text: 老项目升级
+    - text: 项目升级
       children:
-        - text: 渐进迁移
+        - text: 从V1升级
+          link: /other/v1升级.md
+        - text: koa渐进迁移
           link: /other/渐进迁移.md
 
         - text: Express升级

@@ -31,7 +31,7 @@ export default class demo extends BaseService {
 ### controller 中使用
 
 - 引入 service
-- 依赖注入 `@Service('demo')`
+- 依赖注入 `@Service(serviceClazz)` , *注意*：在V2之后，Service参数装饰器只接受class类型参数。不再支持传入文件名字符串。
 - 注入之后可直接使用无需再进行实例
 
 ```javascript
@@ -62,6 +62,8 @@ export default class Demp extends BaseService {
 
 ### 在非 Controller 中使用 Service 时，必须传入 ctx 进行实例化才能使用。
 
+> 如果`Service`不需要传入`ctx` ,则无需继承`BaseService`
+
 - 在插件中使用
 
 ```javascript
@@ -82,8 +84,7 @@ export default (uma: Uma, options: any = {}): Koa.Middleware => {
 // Aspect
 import DemoService from '../service/demo.service'
 
-export default class Method implements IAspect {
-  async around(proceedPoint: IProceedJoinPoint) {
+export default async around(proceedPoint: IProceedJoinPoint) {
     const { target, proceed, args } = proceedPoint
 
     const demoService: DemoService = new DemoService(target.ctx)
@@ -92,7 +93,6 @@ export default class Method implements IAspect {
 
     return result
   }
-}
 ```
 
 **此外，框架还提供了@Resource 和@Inject 装饰器来实现`IOC容器`和`依赖注入`**

@@ -37,6 +37,7 @@ saveUser(@Body.ToNumber('age') age: number){
 
 | 修饰器                                                     | 使用说明                                                                                                                           |
 | ---------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| @Param(id:string)                                          | 动态路由参数修饰
 | @Query(id:string)                                          | url 参数修饰器                                                                                                                     |
 | @Body(id?:string or Function or string[])                  | POST 请求参数修饰器 `@Body() body:object ` or `@Body('id') id:any` or `@Body(['name','age']) user: {name:any,age:any}`             |
 | @Require(id: string,message?:string)                       | url 参数修饰并做必填校验                                                                                                           |
