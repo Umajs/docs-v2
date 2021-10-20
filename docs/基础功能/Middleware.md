@@ -40,6 +40,28 @@ export default {
 >
 > 如果要动态的加载中间件，请使用复合插件形式。[Plugin 参考文档](./Plugin.md#复合插件形式)
 
+## Middleware装饰器 (v2+)
+
+> Middleware装饰器目前只支持函数装饰，可将koa中间件作用于特定的controller函数。这可以更灵活的控制避免全局中间件的影响；将中间件局部应用于单一或者多个路由。
+
+```ts
+
+const middleware = async (ctx,next)=>{
+    console.log("****** middleware before ******");
+    await next();
+    console.log("****** middleware after *******");
+}
+
+export default class Index extends BaseController {
+    @Middleware(middleware)
+    @Path('/')
+    index() {
+        return this.view('index.html', {
+            frameName: this.testService.returnFrameName(),
+        });
+    }
+```
+
 ## AOP 装饰器形式
 
 中间件和 Around 方式很相似，都是包裹异步方法。中间件是 next，around 是 proceed，但是他们有一些区别：
@@ -48,41 +70,4 @@ export default {
 >
 > 2、切面可以对参数进行修改、判断、注入等操作，还可以对返回结果进行修改、校验、统一封装等操作
 
-Uma 内置了将中间件转换为切面的方法 `middlewareToAround`，因此我们可以以 AOP 的装饰器形式使用中间件，使用示例如下：
-
-```javascript
-// app/src/controller/index.controller.ts AOP形式使用中间件
-import * as path from 'path';
-import { BaseController, Path, Around, Result } from '@umajs/core';
-import { mv } from './../aspect/mw.aspect'
-
-export default class Index extends BaseController {
-    @Around(mw)
-    @Path('/page')
-    page() {
-       console.log(this.userService.getDefaultUserAge());
-       return Result.view('index.html', { test: 3 })
-    }
-}
-
-// app/src/aspect/mw.aspect.ts 定义AOP
-import { middlewareToAround } from '@umajs/core';
-
-const mwFn = function() { // 定义中间件
-  return async (ctx, next) => {
-    console.log("****** mw before ******");
-    await next();
-    console.log("****** mw after *******");
-  }
-}
-
-// 将中间件转换为切面方法
-export const mv = async ()=>{
-   return middlewareToAround(mwFn())
-}
-```
-
-对于有局部加载需求的中间件，使用 AOP 形式代码结构更清晰，可读性更强，可以在`controller`中直观的看到当前中间件的使用。
-
-## Middleware装饰器
-> V2之后新增了Middleware，具体使用方法待补充。。。TODO
+对于在中间件需要对参数，返回结构进行统一处理和校验，推荐使用 AOP 形式代码结构更清晰，可读性更强。[AOP 参考文档](./AOP.md)
