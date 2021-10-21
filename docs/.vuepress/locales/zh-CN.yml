@@ -50,88 +50,64 @@
   sidebar:
     - text: 新手指南
       children:
-        - text: 框架介绍
-          link: /新手指南/框架介绍.md
+        - /新手指南/框架介绍.md
 
         - text: Uma与Koa
           link: /新手指南/Uma.md
-        - text: 快速开始
-          link: /新手指南/快速开始.md
+
+        - /新手指南/快速开始.md
 
     - text: 基础功能
       children:
-        - text: Uma
-          link: /基础功能/Uma.md
+        -  /基础功能/Uma.md
 
-        - text: Router
-          link: /基础功能/Router.md
+        -  /基础功能/Router.md
 
-        - text: Controller
-          link: /基础功能/Controller.md
+        -  /基础功能/Controller.md
 
-        - text: Result
-          link: /基础功能/Result.md
+        - /基础功能/Result.md
 
-        - text: Service
-          link: /基础功能/Service.md
+        -  /基础功能/Service.md
 
-        - text: Plugin
-          link: /基础功能/Plugin.md
+        -  /基础功能/Plugin.md
 
-        - text: IOC
-          link: /基础功能/IOC.md
+        -  /基础功能/IOC.md
 
-        - text: AOP
-          link: /基础功能/AOP.md
+        -  /基础功能/AOP.md
 
-        - text: Config
-          link: /基础功能/Config.md
+        -  /基础功能/Config.md
 
-        - text: Middleware
-          link: /基础功能/Middleware.md
+        -  /基础功能/Middleware.md
 
-        - text: Decorator
-          link: /基础功能/Decorator.md
+        -  /基础功能/Decorator.md
 
-        - text: ArgDecorator
-          link: /other/ArgDecorator.md
+        -  /other/ArgDecorator.md
 
     - text: 插件
       children:
-        - text: Status
-          link: /插件/status.md
+        - /插件/status.md
 
-        - text: Static
-          link: /插件/Static.md
+        -  /插件/Static.md
 
-        - text: Views
-          link: /插件/Views.md
+        -  /插件/Views.md
 
-        - text: i18n
-          link: /插件/i18n.md
+        -  /插件/i18n.md
 
-        - text: Logger
-          link: /插件/Logger.md
+        -  /插件/Logger.md
 
-        - text: Session
-          link: /插件/Session.md
+        -  /插件/Session.md
 
-        - text: Schedule
-          link: /插件/schedule.md
+        -  /插件/schedule.md
 
-        - text: Dev
-          link: /插件/dev.md
+        -  /插件/dev.md
 
     - text: 其它
       children:
-        - text: 断点调试
-          link: /other/断点调试.md
+        -  /other/断点调试.md
 
-        - text: 错误处理
-          link: /other/错误处理.md
+        -  /other/错误处理.md
 
-        - text: 日志
-          link: /插件/Logger.md
+        -  /插件/Logger.md
 
     - text: 服务端渲染
       children:
@@ -143,10 +119,6 @@
 
     - text: 项目升级
       children:
-        - text: 从V1升级
-          link: /other/v1升级.md
-        - text: koa渐进迁移
-          link: /other/渐进迁移.md
-
-        - text: Express升级
-          link: /other/express升级.md
+        -  /other/v1升级.md
+        -  /other/渐进迁移.md
+        -  /other/express升级.md

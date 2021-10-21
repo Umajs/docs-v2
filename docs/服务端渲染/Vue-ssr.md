@@ -1,4 +1,4 @@
-# umajs-vue-ssr
+# vue-ssr
 
 > `Umajs-vue-ssr`是由[@umajs/plugin-vue-ssr](https://github.com/Umajs/plugin-vue-ssr) 搭配[Srejs](https://github.com/dazjean/Srejs)构建的轻量级，使用简单，灵活的`vue`服务端渲染解决方案;可以在`controller`和`middleware`中灵活使用,通过模板引擎式的语法对`vue`页面组件进行服务端渲染。
 

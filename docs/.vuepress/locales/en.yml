@@ -15,3 +15,14 @@
   warning: Warning
   danger: Danger
   editLinkText: Edit this page on GitHub
+   # navbar
+  navbar:
+    - '/新手指南/框架介绍.md'
+
+    - '/新手指南/快速开始.md'
+
+   # sidebar
+  sidebar:
+    - text: 新手指南
+      children:
+        -  /新手指南/框架介绍.md
