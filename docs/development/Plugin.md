@@ -63,4 +63,4 @@ export default {
 }
 ```
 
-## [插件开发](../插件/dev.md)
+## [插件开发](../plugin/dev.md)

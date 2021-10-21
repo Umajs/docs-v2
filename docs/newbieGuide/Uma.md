@@ -128,4 +128,4 @@ Uma 提供 @Aspect 装饰器作为 IOC 容器，你可以在 aspect 文件夹下
 
 开发者可以通过调用@Aspect('xx')的方式在类或方法中织入切面。
 
-更多使用方式可查看[AOP](../基础功能/AOP.md)一节。
+更多使用方式可查看[AOP](../development/AOP.md)一节。
