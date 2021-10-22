@@ -124,7 +124,7 @@ module.exports = defineUserConfig<DefaultThemeOptions, WebpackBundlerOptions>({
     logo: '/images/UMajsV2.png',
     repoLabel: 'Github',
     docsBranch: 'main',
-    docsRepo: 'https://github.com/Umajs/docs',
+    docsRepo: 'https://github.com/Umajs/docs-v2',
     docsDir: 'docs',
     editLinkPattern: ':repo/edit/:branch/:path',
     themePlugins: {
