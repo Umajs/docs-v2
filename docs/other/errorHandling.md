@@ -22,57 +22,55 @@ export default class Index extends BaseController {
 }
 ```
 
-## 使用 Aspect
+## 使用Around
 
-Uma 提供的 Aspect 中，我们可以通过`afterThrowing异常通知`或`around环绕通知`来处理异常。
+Uma 提供的 Aspect 中，我们可以通过`Around`来处理异常。
 
-**1. afterThrowing**
-
-在[AOP](./AOP.md#通知)一节中我们介绍了，当方法执行过程中，如果有未被捕获的异常，则会执行`afterThrowing`通知，所以我们可以通过 Aspect 的 afterThrowing 方法来处理错误。
+在[AOP](./AOP.md#通知)一节中我们介绍了，当方法执行过程中，Around装饰器传入的函数可以拦截目标函数的执行，我们可以在函数执行过程中通过try,catch捕获异常并且进行统一返回处理。
 
 ```javascript
 // ${URSA_ROOT}/aspect/err.aspect.ts
-import { IAspect } from '@umajs/core';
+// /aspect/method.aspect.ts
+import { IProceedJoinPoint } from '@umajs/core';
 
-export default class Err implements IAspect {
-    afterThrowing(err: Error) {
-        // 处理错误
-        console.error(`发生错误：${err}`);
+export async function throwErr(proceedPoint: IProceedJoinPoint<any>) {
+    let result;
+    try{
+       // 执行被修饰的方法
+      const result = await proceedPoint.proceed();
+    }catch(e:Error){
+      return Result.json({code:1,message:'执行方法异常！',stack:e.stack})
     }
+   
+    return result;
 }
 
 // ${URSA_ROOT}/controller/index.controller.ts
 export default class Index extends  BaseController {
     // 添加异常处理切面方法，当index执行出错时会执行afterThrowing
-    @Aspect.afterThrowing('err')
+    @Around(throwErr)
     index() {
         throw new Error('error');
     }
 }
 ```
 
-> 注意：Aspect 的 afterThrowing 会捕获所修饰方法`未被捕获的错误`，如果你已经在方法中 try-catch 了，那么 afterThrowing 方法就不会被执行
+## 中间件方式
 
-**2. around**
+在[plugin](../development/Plugin.md#插件配置实例)中，我们可以通过插件加载全局中间件，而在中间件中我们可以对next中间件进行捕获，因为插件中引入的中间件执行顺序总是在controller函数被调用之前。
 
-在[AOP](./AOP.md#通知)一节中我们介绍了，`around通知`可以决定目标方法是否执行，我们可以在`around`接收的参数中获取目标方法`proceed`，那么我们就可以对`proceed使用try-catch`来捕获目标方法执行过程中产生的异常。
-
-```javascript
-// ${URSA_ROOT}/aspect/index.aspect.ts
-import { IAspect, IProceedJoinPoint } from '@umajs/core'
-
-export default class Index implements IAspect {
-  async around(proceedPoint: IProceedJoinPoint) {
-    const { proceed, args } = proceedPoint
-
-    try {
-      await proceed(...args)
-    } catch (err) {
-      // 处理错误
-      console.error(`发生错误：${err}`)
-    }
-  }
-}
+```ts
+// plugin/error-handler/index.ts
+export default (uma: Uma, options: TView = {}): Koa.Middleware => {
+    // uma 实例化对象；options 插件配置的 options，等同于 uma.plugin['error-handler'].options
+    return async(ctx,next)=>{
+        try{
+          await next();
+        }catch(e){
+          console.error('error-handler插件捕获异常',e);
+        }
+    };
+};
 ```
 
 ## 使用 plugin-status
@@ -98,5 +96,6 @@ export default {
 ## 三种错误处理方式的使用场景
 
 - try-catch: 适合对方法`单独`进行错误处理
-- Aspect: 更具`可复用性`，可以对多个方法进行错误处理
+- Around: 更具`可复用性`，可以对多个方法进行错误处理
+- 中间件方式: 属于全局异常兜底策略，适用于全局范围内未知异常捕获处理
 - plugin-status: 对整个系统在运行中未被捕获的错误的`兜底操作`，让系统更健壮，同时除了错误处理外，更多的是`对不同状态码的统一处理`

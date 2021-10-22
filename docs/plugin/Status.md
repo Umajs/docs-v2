@@ -75,4 +75,4 @@ export default {
 }
 ```
 
-> 在 AOP 一节中我们介绍了@Aspect.afterThrowing 可以用来处理方法调用时发生的异常，`当方法使用了@Aspect.afterThrowing`进行修饰后或者代码中`使用了try-catch`，plugin-status 中配置的`_error方法就不会被调用`，plugin-status 的只会捕获到未 catch 住的错误
+> 在[异常errorHanding](../other/errorHandling.md#使用Around)一节中我们介绍了@Around 可以用来处理方法调用时发生的异常，`当方法使用了@Around`进行修饰在代码中`使用了try-catch`，plugin-status 中配置的`_error方法就不会被调用`，plugin-status 的只会捕获到未 catch 住的错误

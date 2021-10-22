@@ -30,7 +30,7 @@ type TView = {
 
 // options 是插件的配置及 [pluginName].config.ts 的配置结合配置
 export default (uma: Uma, options: TView = {}): Koa.Middleware => {
-    // uma 实例化对象；options 插件配置的 options，等同于 uma.plugin['error-handler'].options
+    // uma 实例化对象；options 插件配置的 options，等同于 uma.plugin['view'].options
     return views(options.root, options.opts);
 };
 ```

@@ -78,10 +78,10 @@ export default (uma: Uma, options: any = {}): Koa.Middleware => {
 };
 ```
 
-- 在 Aspect 切面中使用
+- 在 Around 面向切面编程时使用
 
 ```javascript
-// Aspect
+// src/aspect/demo.aspect.ts
 import DemoService from '../service/demo.service'
 
 export default async around(proceedPoint: IProceedJoinPoint) {

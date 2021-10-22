@@ -74,7 +74,7 @@ http://127.0.0.1:8058
 
 #### 保留目录
 
-> src 中 config、aspect、plugins 三个目录为保留目录
+> src 中 config、controller、plugins 三个目录为保留目录
 
 ## 服务部署
 

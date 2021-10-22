@@ -70,13 +70,13 @@ Uma 在 Koa 2 的基础上对其进行了拓展，致力于为开发者提供一
 >
 > controller 可以通过 IOC 调用 service 和 resource
 >
-> controller、service、resource 等可以通过 AOP 的 Aspect 进行切面开发
+> controller、service、resource 等可以通过 AOP 的 Around 进行切面开发
 >
 > controller 返回 Result，Umajs 解析 Result 按 Koa 框架格式返回数据
 >
-> AOP 可以对 controller、service、resource 进行切面开发，还可以将 middleware 封装成 Aspect.around 对 controller 进行切页面开发
+> AOP 可以对 controller、service、resource 进行切面开发，还可以将 middleware 封装成 Around 对 controller 进行切页面开发
 >
-> 中间件（middleware）有提供两种形式使用，一种是插件配置(plugin.config.ts)，一种是封装成 Aspect.around 以装饰器形式使用
+> 中间件（middleware）有提供两种形式使用，一种是插件配置(plugin.config.ts)，一种是封装成 Around 以装饰器形式使用
 >
 > Plugin 有两种形式进行扩展，一种中间件形式、一种复合形式
 
@@ -118,14 +118,18 @@ AOP（面向切面编程）扩展了传统的 OOP（面向对象编程）模型�
 例如：我们需要在代码中添加日志功能，但日志打印并不是我们核心业务需要关注的。  
 在 AOP 中，日志功能作为横切关注点，会建议将其抽象化并封装到一个切面中去。
 
-Uma 提供 @Aspect 装饰器作为 IOC 容器，你可以在 aspect 文件夹下新建自己的切面，并且定义 5 类通知：
+Uma 提供 @Around 装饰器作为 IOC 容器，你可以在 aspect 文件夹下新建自己的切面，实现5 类通知：
 
-- 前置通知
-- 后置通知
-- 异常通知
-- 最终通知
-- 环绕通知
+- 前置通知：在目标方法之前执行
+- 后置通知：在目标方法之后执行
+- 异常通知：当执行目标方法出现异常时执行
+- 最终通知：当目标方法有返回值之后执行，在后置通知之后
+- 环绕通知：在最开始调用时执行，会将目标方法作为参数传入，对目标方法(proceed)及入参(args)、出参(result)进行拦截。
 
-开发者可以通过调用@Aspect('xx')的方式在类或方法中织入切面。
+<!-- - 前置通知 proceed执行之前
+- 后置通知 proceed执行之后
+- 异常通知 proceed异常捕获 -->
+
+开发者可以通过调用@Around(func)的方式在类或方法中织入切面。
 
 更多使用方式可查看[AOP](../development/AOP.md)一节。

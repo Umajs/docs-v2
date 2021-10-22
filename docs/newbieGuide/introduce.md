@@ -10,7 +10,7 @@
 - 统一响应 (Result)， 让 Controller 响应数据更便捷清晰
 - 装饰器 (Decorator)，代码组织更优雅方便
 - 自定义装饰器 (createArgDecorator)， 可以快速的扩展参数装饰器，用于参数校验、参数转换、参数聚合等
-- 面向切面 (AOP)，基于装饰器的 `Aspect` 可以很方便的对任意方法进行拦截、修改等，并且能将中间件转换成 `Aspect.around` 使用
+- 面向切面 (AOP)，基于装饰器的 `Around` 可以很方便的对任意方法进行拦截、修改等，并且能将中间件转换成 `Around` 使用
 - 依赖注入 (IOC)，模块依赖不再需要引入和实例化
 - 插件、切面形式让中间件(Middleware)使用更优雅
 - 高稳定高性能，单元测试覆盖全
@@ -26,16 +26,16 @@
 >
 > 2、controller 通过框架提供的 `Result` 便捷的响应数据
 >
-> 3、`Aspect` 通过 `around` 方法进行方法的拦截，对方法的 `参数` 进行校验, 对 `返回值` 进行校验/修改
+> 3、`Around`切面装饰器方法进行方法的拦截，对方法的 `参数` 进行校验, 对 `返回值` 进行校验/修改
 
 ```js
 // index.controller.ts
 import Method from './method.aspect'
 import { AgeCheck } from './ArgDecorator'
 
-@Aspect(Method) // 可以装饰在类上对所有方法进行装饰
+@Around(Method) // 可以装饰在类上对所有方法进行装饰
 export default class extends BaseController {
-  // @Aspect(Method) // 可以装饰在方法上对单一方法进行装饰
+  // @Around(Method) // 可以装饰在方法上对单一方法进行装饰
   @Path('/hello')
   index(@Query('name') name: string, @AgeCheck('age') age: number) {
     return Result.json({
@@ -69,10 +69,9 @@ export const AgeCheck = createArgDecorator((ctx: IContext, ageKey: string) => {
 
 ```js
 // method.aspect.ts
-import { IAspect, IProceedJoinPoint } from '@umajs/core';
+import { IProceedJoinPoint } from '@umajs/core';
 
-export default class implements IAspect {
-    async around(proceedPoint: IProceedJoinPoint) {
+export const  method = async (proceedPoint: IProceedJoinPoint) {
         const { proceed, args } = proceedPoint;
 
         // 校验参数
@@ -87,5 +86,4 @@ export default class implements IAspect {
 
         return result;
     }
-}
 ```

@@ -64,12 +64,7 @@ export default class UserModel {
 import {
   BaseController,
   Path,
-  Private,
-  Param,
-  Query,
-  RequestMethod,
   Inject,
-  Aspect,
 } from '@umajs/core'
 import UserModel from '../model/user.model'
 
@@ -77,7 +72,7 @@ export default class Index extends BaseController {
   // ===> 获取实例，实例的名称为@Resource修饰的class所在的文件名
   @Inject(UserModel)
   user: UserModel
-
+  @Path('/getUser')
   async testModel() {
     // ===> 这里不需要创建user实例，@Resource已经将userModel实例化保存在容器中
     const userList = await this.user.findAll()

@@ -52,28 +52,26 @@ export default class extends BaseController {
 
 ### controller 实例
 
-Uma 在需要的模板返回的数据中加入 version，这里我们用 Aspect.around 可以很容易做到。
+Uma 在需要的模板返回的数据中加入 version，这里我们用 Around 可以很容易做到。
 
 ```javascript
 // version.aspect.ts
-import { IAspect, IJoinPoint, IProceedJoinPoint, Result } from '@umajs/core';
+import { IJoinPoint, IProceedJoinPoint, Result } from '@umajs/core';
 
-export default class implements IAspect {
-    async around(proceedPoint: IProceedJoinPoint<any>) {
+export const version =  async(proceedPoint: IProceedJoinPoint<any>) {
         const result: Result = await proceedPoint.proceed();
 
         result.data.version = 'v1.0.0';
 
         return result;
-    }
 }
 
 // info.controller.ts
-import { BaseController, Aspect, Result } from '@umajs/core';
-
+import { BaseController, Aournd, Result } from '@umajs/core';
+import { version } from './aspect/version.aspect'
 export default class Info extends BaseController {
 
-    @Aspect.aournd('version')
+    @Aournd(version)
     info() {
         return Result.view('info.html', {});
     }

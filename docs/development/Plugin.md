@@ -63,4 +63,20 @@ export default {
 }
 ```
 
+插件实际上是一个接收uma对象和option参数的函数，函数必须返回中间件函数或复合插件格式[对象](../plugin/dev.md#复合插件形式)
+
+```ts
+// plugin/error-handler/index.ts
+export default (uma: Uma, options: TView = {}): Koa.Middleware => {
+    // uma 实例化对象；options 插件配置的 options，等同于 uma.plugin['error-handler'].options
+    return async(ctx,next)=>{
+        try{
+          await next();
+        }catch(e){
+          console.error('error-handler插件捕获异常',e);
+        }
+    };
+};
+```
+
 ## [插件开发](../plugin/dev.md)
