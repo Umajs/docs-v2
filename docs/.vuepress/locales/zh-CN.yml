@@ -28,18 +28,18 @@
   # navbar
   navbar:
     - text: 介绍
-      link: '/新手指南/框架介绍.md'
+      link: '/newbieGuide/introduce.md'
 
     - text: 快速开始
-      link: '/新手指南/快速开始.md'
+      link: '/newbieGuide/quickstart.md'
 
     - text: SSR
       children:
         - text: 'React'
-          link: '/服务端渲染/React-ssr.md'
+          link: '/ssr/React-ssr.md'
 
         - text: 'Vue'
-          link: '/服务端渲染/Vue-ssr.md'
+          link: '/ssr/Vue-ssr.md'
 
     - text: v2.x
       children:
@@ -50,75 +50,75 @@
   sidebar:
     - text: 新手指南
       children:
-        - /新手指南/框架介绍.md
+        - /newbieGuide/introduce.md
 
         - text: Uma与Koa
-          link: /新手指南/Uma.md
+          link: /newbieGuide/Uma.md
 
-        - /新手指南/快速开始.md
+        - /newbieGuide/quickstart.md
 
     - text: 基础功能
       children:
-        -  /基础功能/Uma.md
+        -  /development/Uma.md
 
-        -  /基础功能/Router.md
+        -  /development/Router.md
 
-        -  /基础功能/Controller.md
+        -  /development/Controller.md
 
-        - /基础功能/Result.md
+        -  /development/Result.md
 
-        -  /基础功能/Service.md
+        -  /development/Service.md
 
-        -  /基础功能/Plugin.md
+        -  /development/Plugin.md
 
-        -  /基础功能/IOC.md
+        -  /development/IOC.md
 
-        -  /基础功能/AOP.md
+        -  /development/AOP.md
 
-        -  /基础功能/Config.md
+        -  /development/Config.md
 
-        -  /基础功能/Middleware.md
+        -  /development/Middleware.md
 
-        -  /基础功能/Decorator.md
+        -  /development/Decorator.md
 
         -  /other/ArgDecorator.md
 
     - text: 插件
       children:
-        - /插件/status.md
+        -  /plugin/status.md
 
-        -  /插件/Static.md
+        -  /plugin/Static.md
 
-        -  /插件/Views.md
+        -  /plugin/Views.md
 
-        -  /插件/i18n.md
+        -  /plugin/i18n.md
 
-        -  /插件/Logger.md
+        -  /plugin/Logger.md
 
-        -  /插件/Session.md
+        -  /plugin/Session.md
 
-        -  /插件/schedule.md
+        -  /plugin/schedule.md
 
-        -  /插件/dev.md
+        -  /plugin/dev.md
 
     - text: 其它
       children:
-        -  /other/断点调试.md
+        -  /other/debug.md
 
-        -  /other/错误处理.md
+        -  /other/errorHandling.md
 
-        -  /插件/Logger.md
+        -  /plugin/Logger.md
 
     - text: 服务端渲染
       children:
         - text: React
-          link: /服务端渲染/React-ssr.md
+          link: /ssr/React-ssr.md
 
         - text: Vue2.0
-          link: /服务端渲染/Vue-ssr.md
+          link: /ssr/Vue-ssr.md
 
     - text: 项目升级
       children:
-        -  /other/v1升级.md
-        -  /other/渐进迁移.md
-        -  /other/express升级.md
+        -  /other/v1Update.md
+        -  /other/preMigration.md
+        -  /other/expressUpdate.md

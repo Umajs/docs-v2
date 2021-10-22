@@ -40,9 +40,9 @@ export default {
 >
 > 如果要动态的加载中间件，请使用复合插件形式。[Plugin 参考文档](./Plugin.md#复合插件形式)
 
-## Middleware装饰器 (v2+)
+## Middleware装饰器
 
-> Middleware装饰器目前只支持函数装饰，可将koa中间件作用于特定的controller函数。这可以更灵活的控制避免全局中间件的影响；将中间件局部应用于单一或者多个路由。
+> Middleware装饰器(v2+)目前只支持函数装饰，可将koa中间件作用于特定的controller函数。这可以更灵活的控制避免全局中间件的影响；将中间件局部应用于单一或者多个路由。
 
 ```ts
 

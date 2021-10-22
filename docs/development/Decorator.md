@@ -4,7 +4,7 @@
 
 ## @Resource、@Inject 修饰器
 
-[IOC 参考文档](./IOC.md#resource、-inject修饰器)
+[IOC 参考文档](./IOC.md#resource、-inject-修饰器)
 
 ## @Service 修饰器
 
@@ -12,11 +12,11 @@
 
 ## @Around 修饰器
 
-[Acpect 参考文档](./AOP.md#Around修饰器)
+[Acpect 参考文档](./AOP.md#around修饰器)
 
 ## Middleware 修饰器
 
-[Middleware 参考文档](./Middleware.md#Middleware装饰器)
+[Middleware 参考文档](./Middleware.md#middleware装饰器)
 
 ## @Path
 

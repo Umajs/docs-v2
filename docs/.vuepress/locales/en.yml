@@ -15,14 +15,34 @@
   warning: Warning
   danger: Danger
   editLinkText: Edit this page on GitHub
-   # navbar
+  # navbar
   navbar:
-    - '/新手指南/框架介绍.md'
+    - text: introduce
+      link: '/newbieGuide/introduce.md'
 
-    - '/新手指南/快速开始.md'
+    - text: quickstart
+      link: '/newbieGuide/quickstart.md'
 
-   # sidebar
-  sidebar:
-    - text: 新手指南
+    - text: SSR
       children:
-        -  /新手指南/框架介绍.md
+        - text: 'React'
+          link: '/ssr/React-ssr.md'
+
+        - text: 'Vue'
+          link: '/ssr/Vue-ssr.md'
+
+    - text: v2.x
+      children:
+        - text: 'v1.x'
+          link: 'https://umajs.gitee.io/'
+
+  # sidebar
+  sidebar:
+    - text: newbieGuide
+      children:
+        - /newbieGuide/introduce.md
+
+        - text: Uma And Koa
+          link: /newbieGuide/Uma.md
+
+        - /newbieGuide/quickstart.md
