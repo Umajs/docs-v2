@@ -21,7 +21,9 @@ import { usePageFrontmatter } from '@vuepress/client'
 import Layout from '@vuepress/theme-default/lib/client/layouts/Layout.vue'
 
 const frontmatter = usePageFrontmatter()
-const anchorRight = ref(frontmatter.value.anchorRight ?? true)
+
+// 默认隐藏
+const anchorRight = ref(frontmatter.value.anchorRight ?? false)
 </script>
 
 <style module lang="scss">

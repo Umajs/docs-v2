@@ -45,7 +45,7 @@ module.exports = defineUserConfig<DefaultThemeOptions, WebpackBundlerOptions>({
           'width=device-width,initial-scale=1,user-scalable=0,viewport-fit=cover',
       },
     ],
-    ['meta', { name: 'origin', content: 'referrer' }],
+    ['meta', { name: 'referrer', content: 'same-origin' }],
     ['meta', { name: 'renderer', content: 'webkit' }],
     ['meta', { name: 'force-rendering', content: 'webkit' }],
     ['meta', { name: 'applicable-device', content: 'pc,mobile' }],
