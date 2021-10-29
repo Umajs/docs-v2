@@ -7,7 +7,7 @@ This site is built with VuePress. Site content is written in Markdown format loc
 - Clone repository
 
 ```base
-git clone git@github.com:Umajs/docs.git
+git clone git@github.com:Umajs/docs-v2.git
 ```
 
 - Install dependencies
