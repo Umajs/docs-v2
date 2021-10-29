@@ -1,6 +1,6 @@
 # 框架介绍
 
-![image](../../public/images/UMajs.png)
+![image](../../public/images/UMajsV2.png)
 
 `Umajs` 是基于 Koa2 使用 TypeScript 开发、通过装饰器使用大部分功能的 Web 框架。
 
