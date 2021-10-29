@@ -5,7 +5,7 @@ home: true
 heroText: UMajs
 actions:
   - text: QuickStart →
-    link: /新手指南/快速开始.md
+    link: /newbieGuide/quickstart.md
     type: primary
 features:
   - title: 功能强大
