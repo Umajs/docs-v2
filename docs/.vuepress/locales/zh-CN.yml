@@ -44,7 +44,7 @@
     - text: v2.x
       children:
         - text: 'v1.x'
-          link: 'https://umajs.gitee.io/'
+          link: 'https://umajs.gitee.io/v1'
 
   # sidebar
   sidebar:
