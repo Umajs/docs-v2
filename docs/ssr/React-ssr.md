@@ -252,6 +252,24 @@ Result.reactView(
 - [uma-useContext-useReducer](https://github.com/dazjean/Srejs/tree/mian/example/uma-useContext-useReducer)
 
 ## 15、FAQ
+- 自定义覆盖框架webpack配置
+
+框架默认集成了常用的webpack配置，可满足日常开发使用，比如默认集成了Sass,less,tsx,ts,静态文件，字体等leader配置；当框架默认配置无法满足时，开发者可通过自定义webpack.config.js去覆盖。
+
+```js
+module.exports = (configureWebpack, type) => {
+    if (type == 'ssr') {
+        //服务端渲染配置
+    } else if (type === 'csr') {
+        //客户端构建配置
+        // configureWebpack.module.rules[0].exclude = /\/node_module\/!(antd.*)/;
+    }
+
+    return configureWebpack;
+};
+
+```
+[自定义覆盖webpack配置文档](https://github.com/dazjean/Srejs/blob/main/doc/react/webpackconfig.md#%E8%A6%86%E7%9B%96%E6%88%96%E8%80%85%E6%96%B0%E5%A2%9Ewebpack%E9%85%8D%E7%BD%AE)
 
 - 引入插件后启动项目报错`TypeError:Cannot read property 'ROOT' of undefined`
   ![image](../../public/images/TypeError-Cannot-react-ssr.png)
