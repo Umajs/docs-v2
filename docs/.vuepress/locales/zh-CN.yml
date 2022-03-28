@@ -85,21 +85,23 @@
 
     - text: 插件
       children:
-        -  /plugin/status.md
+        -  /plugin/Status.md
 
         -  /plugin/Static.md
 
         -  /plugin/Views.md
 
-        -  /plugin/i18n.md
+        -  /plugin/I18n.md
 
         -  /plugin/Logger.md
 
         -  /plugin/Session.md
 
-        -  /plugin/schedule.md
+        -  /plugin/Schedule.md
 
-        -  /plugin/dev.md
+        - /plugin/Cors.md
+
+        -  /plugin/Dev.md
 
     - text: 其它
       children:

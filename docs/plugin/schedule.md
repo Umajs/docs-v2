@@ -1,4 +1,4 @@
-# 定时任务(schedule)
+# 定时任务(Schedule)
 
 例：我们在 app/schedule 目录下创建一个
 pvSchedule.ts 文件
