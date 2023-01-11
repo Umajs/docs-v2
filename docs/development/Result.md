@@ -24,9 +24,25 @@
 
 将文件以流（stream）的方式返回
 
+```js
+    @Path('/stream')
+    donwStream() {
+        const rs = fs.createReadStream(path.resolve(__dirname, './template.controller.ts'));
+        return Result.stream(rs, 'controller.ts');
+    }
+```
+
 #### `Result.download(filePath, opts)`
 
 下载文件
+
+```js
+    @Path('/download')
+    downFile() {
+        return Result.download('/src/controller/template.controller.ts');
+    }
+```
+
 
 #### `Result.done()`
 
